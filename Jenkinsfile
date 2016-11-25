@@ -21,8 +21,8 @@ def ocCmd = "oc --server=${ocpUrl} --insecure-skip-tls-verify --token=${ocpToken
 
 node() {
 
-    env.JAVA_HOME = tool name: 'java8', type: 'hudson.model.JDK'
-    env.M2_HOME = tool name: 'maven3', type: 'hudson.tasks.Maven$MavenInstallation'
+    env.JAVA_HOME = tool name: 'JDK8', type: 'hudson.model.JDK'
+    env.M2_HOME = tool name: 'Maven 3.3.9', type: 'hudson.tasks.Maven$MavenInstallation'
     env.PATH = "${env.JAVA_HOME}/bin:${env.M2_HOME}/bin:${env.PATH}"
 
     def artifactoryServer
