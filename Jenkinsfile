@@ -31,7 +31,7 @@ node() {
 	// Artifactory Config
 	artifactoryServer = Artifactory.server("${artifactoryServerId}")
 	artifactoryMaven = Artifactory.newMavenBuild()
-	artifactoryMaven.tool = 'maven3' // Tool name from Jenkins configuration
+	artifactoryMaven.tool = 'Maven 3.3.9' // Tool name from Jenkins configuration
 	artifactoryMaven.deployer releaseRepo:'${releaseRepo}', snapshotRepo:'${snapshotRepo}', server: artifactoryServer
 
     stage 'WAR Build'
