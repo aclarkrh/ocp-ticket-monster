@@ -1,4 +1,4 @@
-package com.bp.ist.synergy.appstore.kubedsl;
+package org.jboss.examples.ticketmonster.kubedsl;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -65,6 +65,9 @@
 
 		<!-- Used to overide source dir for Kubernetes template generation -->
 		<src.dir>src/main/java</src.dir>
+		
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencyManagement>

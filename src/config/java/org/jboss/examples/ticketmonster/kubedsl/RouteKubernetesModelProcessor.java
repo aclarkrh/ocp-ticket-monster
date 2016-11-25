@@ -1,4 +1,4 @@
-package com.bp.ist.synergy.appstore.kubedsl;
+package org.jboss.examples.ticketmonster.kubedsl;
 
 import com.google.common.collect.ImmutableMap;
 import io.fabric8.openshift.api.model.TemplateBuilder;
