@@ -2,24 +2,24 @@ import org.apache.commons.lang.StringUtils
 
 def mvnCmd = "mvn -s configuration/settings.xml"
 
-def namespaceBase = "synergy"
+//def namespaceBase = ""
 def bldNamespace = "${namespaceBase}-bld"
 def devNamespace = "${namespaceBase}-dev"
 def tstNamespace = "${namespaceBase}-tst"
 
-def artifactoryServerId = ""
-def releaseRepo = ""
-def snapshotRepo = ""
+//def artifactoryServerId = ""
+//def releaseRepo = ""
+//def snapshotRepo = ""
 
-def gitUrl = ""
-def gitBranch = ""
-def gitCredentialsId = ""
+//def gitUrl = ""
+//def gitBranch = ""
+//def gitCredentialsId = ""
 
-def ocpUrl = ""
-def ocpToken = ""
+//def ocpUrl = ""
+//def ocpToken = ""
 def ocCmd = "oc --server=${ocpUrl} --insecure-skip-tls-verify --token=${ocpToken}"
 
-node('jenkins-slave') {
+node() {
 
     env.JAVA_HOME = tool name: 'java8', type: 'hudson.model.JDK'
     env.M2_HOME = tool name: 'maven3', type: 'hudson.tasks.Maven$MavenInstallation'
