@@ -36,8 +36,7 @@ node() {
 
     stage 'WAR Build'
     git branch: "${gitBranch}", credentialsId: "${gitCredentialsId}", url: "${gitUrl}"
-    if(doArtifactory)
-        artifactoryMaven.run pom: 'pom.xml', goals: 'clean install -DskipITs=true -s configuration/settings.xml'
+    artifactoryMaven.run pom: 'pom.xml', goals: 'clean install -DskipITs=true -s configuration/settings.xml'
     
     stage 'OCP Config Build'
 	artifactoryMaven.deployer.artifactDeploymentPatterns.addInclude("**/*kubernetes-*.json")
