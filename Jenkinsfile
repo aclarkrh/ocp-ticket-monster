@@ -34,18 +34,18 @@ node() {
 	artifactoryMaven.tool = 'Maven 3.3.9' // Tool name from Jenkins configuration
 	artifactoryMaven.deployer releaseRepo:'${releaseRepo}', snapshotRepo:'${snapshotRepo}', server: artifactoryServer
 
-  stage 'WAR Build' {
+  stage ('WAR Build') {
     git branch: "${gitBranch}", credentialsId: "${gitCredentialsId}", url: "${gitUrl}"
     artifactoryMaven.run pom: 'pom.xml', goals: 'clean install -DskipITs=true -s configuration/settings.xml'
   }
 
-  stage 'OCP Config Build' {
+  stage ('OCP Config Build') {
     artifactoryMaven.deployer.artifactDeploymentPatterns.addInclude("**/*kubernetes-*.json")
 	  artifactoryMaven.opts = "-Dfabric8.parameter.SOURCE_REPOSITORY_REF.value=${gitBranch}"
     artifactoryMaven.run pom: 'pom.xml', goals: 'clean install -P kube-dsl -s configuration/settings.xml'
   }
 
-  stage 'Image Build' {
+  stage ('Image Build') {
     def artifact = getArtifact()
     def version = getVersion()
     version = version.replaceAll("\\.", "-")
@@ -58,11 +58,11 @@ node() {
     sh "${ocCmd} start-build ${artifact}-${version} -n ${bldNamespace} --wait=true"
   }
 
-  stage 'DEV Deploy' {
+  stage ('DEV Deploy') {
     sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${devNamespace} -f -"
   }
 
-  stage 'TST Deploy' {
+  stage ('TST Deploy') {
     input "Deploy to TST?"
     sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${tstNamespace} | ${ocCmd} apply -n ${tstNamespace} -f -"
   }
