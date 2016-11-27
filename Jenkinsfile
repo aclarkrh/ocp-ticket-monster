@@ -50,6 +50,7 @@ node() {
     def version = getVersion()
     version = version.replaceAll("\\.", "-")
 	  version = version.replaceAll("-SNAPSHOT", "")
+	  version = version.lowerCase(version);
 
     // We need to delete the bc oc apply on an existing bc resets status:lastVersion to 0.
     // We then get an error when we start the build - build no. already exists
