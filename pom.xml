@@ -550,7 +550,7 @@
 
 				<fabric8.parameter.WAR_FILE_URL.description>The URL to retirve the
 					application WAR file from.</fabric8.parameter.WAR_FILE_URL.description>
-				<fabric8.parameter.WAR_FILE_URL.value>http://localhost:8081/artifactory/list/libs-release-local/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}.war</fabric8.parameter.WAR_FILE_URL.value>
+				<fabric8.parameter.WAR_FILE_URL.value>http://aclark-OSX.home:8081/artifactory/list/libs-release-local/org/jboss/examples/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}.war</fabric8.parameter.WAR_FILE_URL.value>
 
 				<fabric8.parameter.APPLICATION_NAME.description>The name for the
 					application.</fabric8.parameter.APPLICATION_NAME.description>
