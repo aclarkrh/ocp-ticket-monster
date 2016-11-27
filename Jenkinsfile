@@ -54,7 +54,6 @@ node() {
     // We need to delete the bc oc apply on an existing bc resets status:lastVersion to 0.
     // We then get an error when we start the build - build no. already exists
     //sh "${ocCmd} delete bc ${artifact}-${version} --ignore-not-found=true -n ${bldNamespace}"
-	  sh "cat target/classes/kubernetes-build.json -n ${bldNamespace}"
     sh "${ocCmd} process -f target/classes/kubernetes-build.json -n ${bldNamespace} | ${ocCmd} apply -n ${bldNamespace} -f -"
     sh "${ocCmd} start-build ${artifact}-${version} -n ${bldNamespace} --wait=true"
   }
