@@ -694,7 +694,8 @@
 
                                                         project.properties["fabric8.parameter.APPLICATION_VERSION.value"] = StringUtils.lowerCase(project.properties["fabric8.parameter.APPLICATION_VERSION.value"])
                                                         project.properties["fabric8.parameter.APPLICATION_VERSION.value"] = StringUtils.replace(project.properties["fabric8.parameter.APPLICATION_VERSION.value"], ".", "-")
-                                                        project.properties["fabric8.parameter.APPLICATION_VERSION.value"] = StringUtils.replace(project.properties["fabric8.parameter.APPLICATION_VERSION.value"], "-snapshot", "")
+                                                        project.properties["fabric8.parameter.APPLICATION_VERSION.value"] = StringUtils.replace(project.properties["fabric8.parameter.APPLICATION_VERSION.value"], "-snapshot", "-s")
+                                                        project.properties["fabric8.parameter.APPLICATION_VERSION.value"] = StringUtils.replace(project.properties["fabric8.parameter.APPLICATION_VERSION.value"], "-final", "-f")
 
                                                         if(StringUtils.contains(project.properties["fabric8.parameter.WAR_FILE_URL.value"], "SNAPSHOT"))
                                                                 project.properties["fabric8.parameter.WAR_FILE_URL.value"] = StringUtils.replace(project.properties["fabric8.parameter.WAR_FILE_URL.value"], "release", "snapshot")
