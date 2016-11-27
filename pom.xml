@@ -546,7 +546,7 @@
 
 				<fabric8.parameter.SOURCE_SECRET.description>The secret containing
 					the git credentials.</fabric8.parameter.SOURCE_SECRET.description>
-				<fabric8.parameter.SOURCE_SECRET.value></fabric8.parameter.SOURCE_SECRET.value>
+				<fabric8.parameter.SOURCE_SECRET.value>git-basic-secret</fabric8.parameter.SOURCE_SECRET.value>
 
 				<fabric8.parameter.WAR_FILE_URL.description>The URL to retirve the
 					application WAR file from.</fabric8.parameter.WAR_FILE_URL.description>
