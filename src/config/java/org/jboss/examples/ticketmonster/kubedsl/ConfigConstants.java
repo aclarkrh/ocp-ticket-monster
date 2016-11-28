@@ -35,12 +35,7 @@ public class ConfigConstants {
     public static final int LIVENESS_PROBE_TIMEOUT_SECS = 10;
     public static final int LIVENESS_PROBE_FAILURE_THRESHOLD = 3;
     public static final int LIVENESS_PROBE_SUCCESS_THRESHOLD = 1;
-    
-    public static final String PERSISTENT_VOLUME_CLAIM_NAME = "${APPLICATION_NAME}-pvc";
-    public static final String PERSISTENT_VOLUME_CLAIM_SIZE = "${PERSISTENT_VOLUME_CLAIM_SIZE}";
-    public static final String PERSISTENT_VOLUME_MOUNT_NAME = "${APPLICATION_NAME}-mnt";
-    public static final String PERSISTENT_VOLUME_MOUNT_PATH = "${PERSISTENT_VOLUME_MOUNT_PATH}";
-	    
+    	    
     public static final int EAP_HTTP_PORT = 8080;
 	public static final int EAP_JOLOKIA_PORT = 8778;
 

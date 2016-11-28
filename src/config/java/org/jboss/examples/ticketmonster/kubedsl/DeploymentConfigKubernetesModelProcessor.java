@@ -14,14 +14,9 @@ import io.fabric8.kubernetes.api.model.EnvVar;
 import io.fabric8.kubernetes.api.model.HTTPGetAction;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.ObjectReference;
-import io.fabric8.kubernetes.api.model.PersistentVolumeClaimVolumeSource;
 import io.fabric8.kubernetes.api.model.Probe;
 import io.fabric8.kubernetes.api.model.Quantity;
 import io.fabric8.kubernetes.api.model.ResourceRequirements;
-import io.fabric8.kubernetes.api.model.Volume;
-import io.fabric8.kubernetes.api.model.VolumeBuilder;
-import io.fabric8.kubernetes.api.model.VolumeMount;
-import io.fabric8.kubernetes.api.model.VolumeMountBuilder;
 import io.fabric8.openshift.api.model.DeploymentTriggerImageChangeParams;
 import io.fabric8.openshift.api.model.DeploymentTriggerPolicy;
 import io.fabric8.openshift.api.model.TemplateBuilder;
@@ -51,7 +46,6 @@ public class DeploymentConfigKubernetesModelProcessor {
                             .withTerminationGracePeriodSeconds(60L)
                             .withContainers(getContainers())
                             .withRestartPolicy("Always")
-                            .withVolumes(getVolumes())
                         .endSpec()
                     .endTemplate()
 
@@ -126,7 +120,6 @@ public class DeploymentConfigKubernetesModelProcessor {
         container.setPorts(getPorts());
         container.setEnv(getEnv());
         container.setResources(getResourceRequirements());
-        container.setVolumeMounts(getVolumeMounts());
         return container;
     }
 
@@ -141,33 +134,6 @@ public class DeploymentConfigKubernetesModelProcessor {
     }
 
 
-    private List<Volume> getVolumes(){
-
-        List<Volume> volumes = new ArrayList<Volume>();
-
-        volumes.add(new VolumeBuilder()
-                .withName(ConfigConstants.PERSISTENT_VOLUME_MOUNT_NAME)
-                .withPersistentVolumeClaim(new PersistentVolumeClaimVolumeSource(ConfigConstants.PERSISTENT_VOLUME_CLAIM_NAME, false))
-                .build());
-
-        return volumes;
-
-    }
-
-
-    private List<VolumeMount> getVolumeMounts(){
-        List<VolumeMount> volumeMounts = new ArrayList<VolumeMount>();
-
-        volumeMounts.add(new VolumeMountBuilder()
-                .withName(ConfigConstants.PERSISTENT_VOLUME_MOUNT_NAME)
-                .withMountPath(ConfigConstants.PERSISTENT_VOLUME_MOUNT_PATH)
-                .withReadOnly(false)
-                .build());
-
-        return volumeMounts;
-
-    }
-    
     private Map<String, String> getSelectors() {
         Map<String, String> selectors = new HashMap<>();
         selectors.put("app", ConfigConstants.APPLICATION_NAME_WITH_VERSION);

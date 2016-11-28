@@ -585,14 +585,6 @@
 					the application ImageStreams and BuildConfigs are installed.</fabric8.parameter.APP_IS_PULL_NAMESPACE.description>
 				<fabric8.parameter.APP_IS_PULL_NAMESPACE.value>ticket-monster</fabric8.parameter.APP_IS_PULL_NAMESPACE.value>
 
-				<fabric8.parameter.PERSISTENT_VOLUME_CLAIM_SIZE.description>The size
-					of the persistent volume being requested</fabric8.parameter.PERSISTENT_VOLUME_CLAIM_SIZE.description>
-				<fabric8.parameter.PERSISTENT_VOLUME_CLAIM_SIZE.value>500Mi</fabric8.parameter.PERSISTENT_VOLUME_CLAIM_SIZE.value>
-<!-- 
-				<fabric8.parameter.PERSISTENT_VOLUME_MOUNT_PATH.description>Mount
-					where application binaries are stored</fabric8.parameter.PERSISTENT_VOLUME_MOUNT_PATH.description>
-				<fabric8.parameter.PERSISTENT_VOLUME_MOUNT_PATH.value>___INSERT_PVC_MOUNT_PATH___</fabric8.parameter.PERSISTENT_VOLUME_MOUNT_PATH.value>
--->
 				<fabric8.parameter.READINESS_PROBE_PATH.description>The path to
 					probe for the HTTP readiness check</fabric8.parameter.READINESS_PROBE_PATH.description>
 				<fabric8.parameter.READINESS_PROBE_PATH.value>/#events</fabric8.parameter.READINESS_PROBE_PATH.value>
