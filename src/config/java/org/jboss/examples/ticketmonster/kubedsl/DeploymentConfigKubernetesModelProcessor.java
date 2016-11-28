@@ -126,8 +126,13 @@ public class DeploymentConfigKubernetesModelProcessor {
     private List<EnvVar> getEnv(){
 
         return new ImmutableList.Builder<EnvVar>()
-                //.add(new EnvVar("JWS_ADMIN_USERNAME", ConfigConstants.JWS_ADMIN_USERNAME, null))
-                //.add(new EnvVar("JWS_ADMIN_PASSWORD", ConfigConstants.JWS_ADMIN_PASSWORD, null))
+                .add(new EnvVar("DB_SERVICE_PREFIX_MAPPING", "ticketmonster-mysql=TICKET_DB", null))
+                .add(new EnvVar("TICKET_DB_SERVICE_HOST", "${EXTERNAL_MYSQL_SERVICE_SERVICE_HOST}", null))
+                .add(new EnvVar("TICKET_DB_SERVICE_PORT", "${EXTERNAL_MYSQL_SERVICE_SERVICE_PORT}", null))
+                .add(new EnvVar("TICKET_DB_JNDI", "java:jboss/datasources/TicketMonsterMySQLDS", null))
+                .add(new EnvVar("TICKET_DB_USERNAME", "changeme", null))
+                .add(new EnvVar("TICKET_DB_PASSWORD", "changeme", null))
+                .add(new EnvVar("TICKET_DB_DATABASE", "ticket-monster", null))
 
                 .build();
 

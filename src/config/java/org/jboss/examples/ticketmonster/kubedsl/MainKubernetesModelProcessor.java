@@ -13,5 +13,7 @@ public class MainKubernetesModelProcessor {
         new DeploymentConfigKubernetesModelProcessor().on(builder);
         new ServiceKubernetesModelProcessor().on(builder);
         new RouteKubernetesModelProcessor().on(builder);
+        new DBServiceKubernetesModelProcessor().on(builder);
+        new DBEndpointKubernetesModelProcessor().on(builder);
     }
 }
