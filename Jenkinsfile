@@ -36,7 +36,7 @@ node() {
 
   stage ('WAR Build') {
     git branch: "${gitBranch}", credentialsId: "${gitCredentialsId}", url: "${gitUrl}"
-    artifactoryMaven.run pom: 'pom.xml', goals: 'clean install -DskipITs=true -s configuration/settings.xml'
+    artifactoryMaven.run pom: 'pom.xml', goals: 'clean install -DskipITs=true -P mysql -s configuration/settings.xml'
   }
 
   stage ('OCP Config Build') {
@@ -60,14 +60,18 @@ node() {
     sh "${ocCmd} start-build ${artifact}-${version} -n ${bldNamespace} --wait=true"
   }
 
-  stage ('DEV Deploy') {
-    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${devNamespace} -f -"
+  stage ('BLD Deploy') {
+    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${bldNamespace} -f -"
   }
+  
+//  stage ('DEV Deploy') {
+//    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${devNamespace} -f -"
+//  }
 
-  stage ('TST Deploy') {
-    input "Deploy to TST?"
-    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${tstNamespace} | ${ocCmd} apply -n ${tstNamespace} -f -"
-  }
+//  stage ('TST Deploy') {
+//    input "Deploy to TST?"
+//    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${tstNamespace} | ${ocCmd} apply -n ${tstNamespace} -f -"
+//  }
 }
 
 def getArtifact() {
