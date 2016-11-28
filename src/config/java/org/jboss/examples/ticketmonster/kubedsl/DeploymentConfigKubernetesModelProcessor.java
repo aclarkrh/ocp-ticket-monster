@@ -8,9 +8,11 @@ import java.util.Map;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
+import io.fabric8.kubernetes.api.model.ConfigMapKeySelector;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ContainerPort;
 import io.fabric8.kubernetes.api.model.EnvVar;
+import io.fabric8.kubernetes.api.model.EnvVarSource;
 import io.fabric8.kubernetes.api.model.HTTPGetAction;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.ObjectReference;
@@ -126,16 +128,33 @@ public class DeploymentConfigKubernetesModelProcessor {
     private List<EnvVar> getEnv(){
 
         return new ImmutableList.Builder<EnvVar>()
-                .add(new EnvVar("DB_SERVICE_PREFIX_MAPPING", "ticketmonster-mysql=TICKET_DB", null))
-                .add(new EnvVar("TICKET_DB_SERVICE_HOST", "${EXTERNAL_MYSQL_SERVICE_SERVICE_HOST}", null))
-                .add(new EnvVar("TICKET_DB_SERVICE_PORT", "${EXTERNAL_MYSQL_SERVICE_SERVICE_PORT}", null))
-                .add(new EnvVar("TICKET_DB_JNDI", "java:jboss/datasources/TicketMonsterMySQLDS", null))
-                .add(new EnvVar("TICKET_DB_USERNAME", "changeme", null))
-                .add(new EnvVar("TICKET_DB_PASSWORD", "changeme", null))
-                .add(new EnvVar("TICKET_DB_DATABASE", "ticket-monster", null))
+                .add(getEnvVar("TICKET_DB_HOST", "ticket.db.host"))
+                .add(getEnvVar("TICKET_DB_PORT", "ticket.db.port"))
+                .add(getEnvVar("TICKET_DB_USERNAME", "ticket.db.username"))
+                .add(getEnvVar("TICKET_DB_PASSWORD", "ticket.db.password"))
+                .add(getEnvVar("TICKET_DB_DATABASE", "ticket.db.database"))
 
                 .build();
 
+    }
+    
+    private EnvVar getEnvVar(String name, String configMapKeyName) {
+    	EnvVar envVar = new EnvVar();
+    	envVar.setName(name);
+    	envVar.setValueFrom(getEnvVarSource(configMapKeyName));
+    	
+    	return envVar;
+    }
+    
+    private EnvVarSource getEnvVarSource(String keyName) {
+    	EnvVarSource envVarSrc = new EnvVarSource();
+    	
+    	ConfigMapKeySelector cmks = new ConfigMapKeySelector();
+    	cmks.setName("ticket-db-config");
+    	cmks.setKey(keyName);
+    	envVarSrc.setConfigMapKeyRef(cmks);
+    	
+    	return envVarSrc;
     }
 
 
