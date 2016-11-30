@@ -19,6 +19,7 @@ import io.fabric8.kubernetes.api.model.ObjectReference;
 import io.fabric8.kubernetes.api.model.Probe;
 import io.fabric8.kubernetes.api.model.Quantity;
 import io.fabric8.kubernetes.api.model.ResourceRequirements;
+import io.fabric8.kubernetes.api.model.SecretKeySelector;
 import io.fabric8.openshift.api.model.DeploymentTriggerImageChangeParams;
 import io.fabric8.openshift.api.model.DeploymentTriggerPolicy;
 import io.fabric8.openshift.api.model.TemplateBuilder;
@@ -128,31 +129,50 @@ public class DeploymentConfigKubernetesModelProcessor {
     private List<EnvVar> getEnv(){
 
         return new ImmutableList.Builder<EnvVar>()
-                .add(getEnvVar("TICKET_DB_HOST", "ticket.db.host"))
-                .add(getEnvVar("TICKET_DB_PORT", "ticket.db.port"))
-                .add(getEnvVar("TICKET_DB_USERNAME", "ticket.db.username"))
-                .add(getEnvVar("TICKET_DB_PASSWORD", "ticket.db.password"))
-                .add(getEnvVar("TICKET_DB_DATABASE", "ticket.db.database"))
+                .add(getConfigMapEnvVar("TICKET_DB_HOST", "ticket.db.host"))
+                .add(getConfigMapEnvVar("TICKET_DB_PORT", "ticket.db.port"))
+                .add(getSecretEnvVar("TICKET_DB_USERNAME", "ticket.db.username"))
+                .add(getSecretEnvVar("TICKET_DB_PASSWORD", "ticket.db.password"))
+                .add(getConfigMapEnvVar("TICKET_DB_DATABASE", "ticket.db.database"))
 
                 .build();
 
     }
     
-    private EnvVar getEnvVar(String name, String configMapKeyName) {
+    private EnvVar getConfigMapEnvVar(String name, String configMapKeyName) {
     	EnvVar envVar = new EnvVar();
     	envVar.setName(name);
-    	envVar.setValueFrom(getEnvVarSource(configMapKeyName));
+    	envVar.setValueFrom(getConfigMapEnvVarSource(configMapKeyName));
     	
     	return envVar;
     }
     
-    private EnvVarSource getEnvVarSource(String keyName) {
+    private EnvVar getSecretEnvVar(String name, String secretKeyName) {
+    	EnvVar envVar = new EnvVar();
+    	envVar.setName(name);
+    	envVar.setValueFrom(getSecretEnvVarSource(secretKeyName));
+    	
+    	return envVar;
+    }
+    
+    private EnvVarSource getConfigMapEnvVarSource(String keyName) {
     	EnvVarSource envVarSrc = new EnvVarSource();
     	
     	ConfigMapKeySelector cmks = new ConfigMapKeySelector();
     	cmks.setName("ticket-db-config");
     	cmks.setKey(keyName);
     	envVarSrc.setConfigMapKeyRef(cmks);
+    	
+    	return envVarSrc;
+    }
+    
+    private EnvVarSource getSecretEnvVarSource(String keyName) {
+    	EnvVarSource envVarSrc = new EnvVarSource();
+    	
+    	SecretKeySelector secretKeyRef = new SecretKeySelector();
+    	secretKeyRef.setName("ticket-db-credentials");
+    	secretKeyRef.setKey(keyName);
+    	envVarSrc.setSecretKeyRef(secretKeyRef);
     	
     	return envVarSrc;
     }
