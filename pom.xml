@@ -63,8 +63,9 @@
 		<version.jboss.bom.wfk>2.7.0-redhat-1</version.jboss.bom.wfk>
 		<buildhelper.plugin.version>1.7</buildhelper.plugin.version>
 
-		<!-- Used to overide source dir for Kubernetes template generation -->
+		<!-- Used to overide source dirs for Kubernetes template generation -->
 		<src.dir>src/main/java</src.dir>
+		<src.test.dir>src/test/java</src.test.dir>
 		
 	</properties>
 
@@ -241,6 +242,7 @@
 
 	<build>
 		<sourceDirectory>${src.dir}</sourceDirectory>
+		<testSourceDirectory>${src.test.dir}</testSourceDirectory>
 
 		<!-- Maven will append the version to the finalName (which is the name 
 			given to the generated war, and hence the context root) -->
@@ -524,7 +526,9 @@
 			<id>kube-dsl</id>
 			<properties>
 
-				<src.dir>src/config/java</src.dir>
+				<src.dir>openshift/src/config/java</src.dir>
+				<src.test.dir>openshift/src/config-test/java</src.test.dir>
+				
 
 				<maven.test.skip>true</maven.test.skip>
 
@@ -536,77 +540,58 @@
 				<fabric8.parameter.GIT_URI.value>https://github.com/aclarkrh/ocp-ticket-monster</fabric8.parameter.GIT_URI.value>
 
 				<!-- This value is normally populated at build time by the Jenkins job -->
-				<fabric8.parameter.SOURCE_REPOSITORY_REF.description>Git branch/tag
-					references</fabric8.parameter.SOURCE_REPOSITORY_REF.description>
+				<fabric8.parameter.SOURCE_REPOSITORY_REF.description>Git branch/tag	references</fabric8.parameter.SOURCE_REPOSITORY_REF.description>
 				<fabric8.parameter.SOURCE_REPOSITORY_REF.value></fabric8.parameter.SOURCE_REPOSITORY_REF.value>
 
-				<fabric8.parameter.CONTEXT_DIR.description>The path within the
-					repository where the application can be found.</fabric8.parameter.CONTEXT_DIR.description>
-				<fabric8.parameter.CONTEXT_DIR.value></fabric8.parameter.CONTEXT_DIR.value>
+				<fabric8.parameter.CONTEXT_DIR.description>The path within the repository where the OpenShift code artifacts can be found with the repo.</fabric8.parameter.CONTEXT_DIR.description>
+				<fabric8.parameter.CONTEXT_DIR.value>openshift</fabric8.parameter.CONTEXT_DIR.value>
 
-				<fabric8.parameter.SOURCE_SECRET.description>The secret containing
-					the git credentials.</fabric8.parameter.SOURCE_SECRET.description>
+				<fabric8.parameter.SOURCE_SECRET.description>The secret containing the git credentials.</fabric8.parameter.SOURCE_SECRET.description>
 				<fabric8.parameter.SOURCE_SECRET.value>git-basic-secret</fabric8.parameter.SOURCE_SECRET.value>
 
-				<fabric8.parameter.WAR_FILE_URL.description>The URL to retirve the
-					application WAR file from.</fabric8.parameter.WAR_FILE_URL.description>
+				<fabric8.parameter.WAR_FILE_URL.description>The URL to retirve the application WAR file from.</fabric8.parameter.WAR_FILE_URL.description>
 				<fabric8.parameter.WAR_FILE_URL.value>http://aclark-OSX.home:8081/artifactory/list/libs-release-local/org/jboss/examples/${project.artifactId}/${project.version}/${project.artifactId}-${project.version}.war</fabric8.parameter.WAR_FILE_URL.value>
 
-				<fabric8.parameter.APPLICATION_NAME.description>The name for the
-					application.</fabric8.parameter.APPLICATION_NAME.description>
+				<fabric8.parameter.APPLICATION_NAME.description>The name for the application.</fabric8.parameter.APPLICATION_NAME.description>
 				<fabric8.parameter.APPLICATION_NAME.value>${project.artifactId}</fabric8.parameter.APPLICATION_NAME.value>
 
-				<fabric8.parameter.APPLICATION_VERSION.description>The version of
-					the application.</fabric8.parameter.APPLICATION_VERSION.description>
+				<fabric8.parameter.APPLICATION_VERSION.description>The version of the application.</fabric8.parameter.APPLICATION_VERSION.description>
 				<fabric8.parameter.APPLICATION_VERSION.value>${project.version}</fabric8.parameter.APPLICATION_VERSION.value>
 
-				<fabric8.parameter.HOSTNAME_HTTP.description>Custom hostname for
-					http service route. Leave blank for default hostname, e.g.:
-					&lt;application-name&gt;-&lt;project&gt;.&lt;default-domain-suffix&gt;</fabric8.parameter.HOSTNAME_HTTP.description>
+				<fabric8.parameter.HOSTNAME_HTTP.description>Custom hostname for http service route. Leave blank for default hostname, e.g.: &lt;application-name&gt;-&lt;project&gt;.&lt;default-domain-suffix&gt;</fabric8.parameter.HOSTNAME_HTTP.description>
 				<fabric8.parameter.HOSTNAME_HTTP.value></fabric8.parameter.HOSTNAME_HTTP.value>
 
-				<fabric8.parameter.HOSTNAME_HTTPS.description>Custom hostname for
-					https service route. Leave blank for default hostname, e.g.:
-					secure-&lt;application-name&gt;-&lt;project&gt;.&lt;default-domain-suffix&gt;</fabric8.parameter.HOSTNAME_HTTPS.description>
+				<fabric8.parameter.HOSTNAME_HTTPS.description>Custom hostname for https service route. Leave blank for default hostname, e.g. secure-&lt;application-name&gt;-&lt;project&gt;.&lt;default-domain-suffix&gt;</fabric8.parameter.HOSTNAME_HTTPS.description>
 				<fabric8.parameter.HOSTNAME_HTTPS.value></fabric8.parameter.HOSTNAME_HTTPS.value>
 
-				<fabric8.parameter.XPAAS_IS_PULL_NAMESPACE.description>Project where
-					the xPaaS ImageStreams and BuildConfigs are installed.</fabric8.parameter.XPAAS_IS_PULL_NAMESPACE.description>
+				<fabric8.parameter.XPAAS_IS_PULL_NAMESPACE.description>Project where the xPaaS ImageStreams and BuildConfigs are installed.</fabric8.parameter.XPAAS_IS_PULL_NAMESPACE.description>
 				<fabric8.parameter.XPAAS_IS_PULL_NAMESPACE.value>openshift</fabric8.parameter.XPAAS_IS_PULL_NAMESPACE.value>
 
 				<fabric8.parameter.XPAAS_IS_NAME.description>The xPaaS Image name.</fabric8.parameter.XPAAS_IS_NAME.description>
 				<fabric8.parameter.XPAAS_IS_NAME.value>jboss-eap70-openshift</fabric8.parameter.XPAAS_IS_NAME.value>
 
-				<fabric8.parameter.XPAAS_IS_TAG.description>Tag that the xPaaS
-					ImageStream should be pushed to</fabric8.parameter.XPAAS_IS_TAG.description>
+				<fabric8.parameter.XPAAS_IS_TAG.description>Tag that the xPaaS ImageStream should be pushed to</fabric8.parameter.XPAAS_IS_TAG.description>
 				<fabric8.parameter.XPAAS_IS_TAG.value>latest</fabric8.parameter.XPAAS_IS_TAG.value>
 
-				<fabric8.parameter.APP_IS_PULL_NAMESPACE.description>Project where
-					the application ImageStreams and BuildConfigs are installed.</fabric8.parameter.APP_IS_PULL_NAMESPACE.description>
+				<fabric8.parameter.APP_IS_PULL_NAMESPACE.description>Project where the application ImageStreams and BuildConfigs are installed.</fabric8.parameter.APP_IS_PULL_NAMESPACE.description>
 				<fabric8.parameter.APP_IS_PULL_NAMESPACE.value>ticket-monster</fabric8.parameter.APP_IS_PULL_NAMESPACE.value>
 
-				<fabric8.parameter.READINESS_PROBE_PATH.description>The path to
-					probe for the HTTP readiness check</fabric8.parameter.READINESS_PROBE_PATH.description>
+				<fabric8.parameter.READINESS_PROBE_PATH.description>The path to probe for the HTTP readiness check</fabric8.parameter.READINESS_PROBE_PATH.description>
 				<fabric8.parameter.READINESS_PROBE_PATH.value>/#events</fabric8.parameter.READINESS_PROBE_PATH.value>
 
-				<fabric8.parameter.LIVENESS_PROBE_PATH.description>The path to probe
-					for the HTTP liveness check</fabric8.parameter.LIVENESS_PROBE_PATH.description>
+				<fabric8.parameter.LIVENESS_PROBE_PATH.description>The path to probe for the HTTP liveness check</fabric8.parameter.LIVENESS_PROBE_PATH.description>
 				<fabric8.parameter.LIVENESS_PROBE_PATH.value>/#events</fabric8.parameter.LIVENESS_PROBE_PATH.value>
 
-				<fabric8.parameter.CPU_REQUEST.description>The requested CPU
-					resource for a container</fabric8.parameter.CPU_REQUEST.description>
+				<fabric8.parameter.CPU_REQUEST.description>The requested CPU resource for a container</fabric8.parameter.CPU_REQUEST.description>
 				<fabric8.parameter.CPU_REQUEST.value>200m</fabric8.parameter.CPU_REQUEST.value>
 
-				<fabric8.parameter.MEM_REQUEST.description>The requested memory
-					resource for a container</fabric8.parameter.MEM_REQUEST.description>
+				<fabric8.parameter.MEM_REQUEST.description>The requested memory resource for a container</fabric8.parameter.MEM_REQUEST.description>
 				<fabric8.parameter.MEM_REQUEST.value>512Mi</fabric8.parameter.MEM_REQUEST.value>
 
-				<fabric8.parameter.CPU_LIMIT.description>The CPU resource limit for
-					a container</fabric8.parameter.CPU_LIMIT.description>
+				<fabric8.parameter.CPU_LIMIT.description>The CPU resource limit for a container</fabric8.parameter.CPU_LIMIT.description>
 				<fabric8.parameter.CPU_LIMIT.value>800m</fabric8.parameter.CPU_LIMIT.value>
 
-				<fabric8.parameter.MEM_LIMIT.description>The memory resource limit
-					for a container</fabric8.parameter.MEM_LIMIT.description>
+				<fabric8.parameter.MEM_LIMIT.description>The memory resource limit for a container</fabric8.parameter.MEM_LIMIT.description>
 				<fabric8.parameter.MEM_LIMIT.value>1024Mi</fabric8.parameter.MEM_LIMIT.value>
 
 			</properties>
@@ -635,10 +620,16 @@
 				<finalName>${project.artifactId}</finalName>
 				<resources>
 					<resource>
-						<directory>src/config/resources</directory>
+						<directory>openshift/src/config/resources</directory>
 						<filtering>true</filtering>
 					</resource>
 				</resources>
+				<testResources>
+					<testResource>
+						<directory>openshift/src/config-test/resources</directory>
+						<filtering>true</filtering>
+					</testResource>
+				</testResources>
 				<plugins>
 					<plugin>
 						<groupId>io.fabric8</groupId>
@@ -710,7 +701,7 @@
 										</property>
 									</properties>
 									<scripts>
-										<script>file:///${project.basedir}/src/config/resources/split-templates.groovy</script>
+										<script>file:///${project.basedir}/openshift/src/config/resources/split-templates.groovy</script>
 									</scripts>
 								</configuration>
 							</execution>
