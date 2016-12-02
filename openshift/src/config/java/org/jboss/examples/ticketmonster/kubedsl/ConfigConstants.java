@@ -45,7 +45,10 @@ public class ConfigConstants {
     public static final String MEM_REQUEST = "${MEM_REQUEST}";
     public static final String CPU_LIMIT = "${CPU_LIMIT}";
     public static final String MEM_LIMIT = "${MEM_LIMIT}";
-
+    
+    public static final String DB_CONFIGMAP_NAME = "${DB_CONFIGMAP_NAME}";
+    public static final String DB_SECRET_NAME = "${DB_SECRET_NAME}";
+    
     public static Map<String, String> getLabels() {
         return ImmutableMap.<String, String> builder()
                 .put("app", ConfigConstants.APPLICATION_NAME_WITH_VERSION)

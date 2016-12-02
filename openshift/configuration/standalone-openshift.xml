@@ -140,7 +140,7 @@
         <subsystem xmlns="urn:jboss:domain:datasources:4.0">
             <datasources>
                 <datasource jndi-name="java:jboss/datasources/TicketMonsterMySQLDS" pool-name="MySQLDS">
-                    <connection-url>jdbc:mysql://${env.TICKET_DB_HOST:localhost}:${env.TICKET_DB_PORT:3306}/${env.TICKET_DB_DATABASE:ticket-monster}</connection-url>
+                    <connection-url>jdbc:mysql://${env.DB_HOST:localhost}:${env.DB_PORT:3306}/${env.DB_DATABASE:ticket-monster}</connection-url>
                     <driver>mysql</driver>
                     <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
                     <pool>
@@ -149,8 +149,8 @@
                         <prefill>true</prefill>
                     </pool>
                     <security>
-                        <user-name>${env.TICKET_DB_USERNAME:user}</user-name>
-                        <password>${env.TICKET_DB_PASSWORD:pass}</password>
+                        <user-name>${env.DB_USERNAME:user}</user-name>
+                        <password>${env.DB_PASSWORD:pass}</password>
                     </security>
                     <statement>
                         <prepared-statement-cache-size>32</prepared-statement-cache-size>

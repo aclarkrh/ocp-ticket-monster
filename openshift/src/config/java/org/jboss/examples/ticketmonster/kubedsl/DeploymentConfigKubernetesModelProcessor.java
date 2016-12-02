@@ -129,11 +129,11 @@ public class DeploymentConfigKubernetesModelProcessor {
     private List<EnvVar> getEnv(){
 
         return new ImmutableList.Builder<EnvVar>()
-                .add(getConfigMapEnvVar("TICKET_DB_HOST", "ticket.db.host"))
-                .add(getConfigMapEnvVar("TICKET_DB_PORT", "ticket.db.port"))
-                .add(getSecretEnvVar("TICKET_DB_USERNAME", "ticket.db.username"))
-                .add(getSecretEnvVar("TICKET_DB_PASSWORD", "ticket.db.password"))
-                .add(getConfigMapEnvVar("TICKET_DB_DATABASE", "ticket.db.database"))
+                .add(getConfigMapEnvVar("DB_HOST", "db.host"))
+                .add(getConfigMapEnvVar("DB_PORT", "db.port"))
+                .add(getSecretEnvVar("DB_USERNAME", "db.username"))
+                .add(getSecretEnvVar("DB_PASSWORD", "db.password"))
+                .add(getConfigMapEnvVar("DB_DATABASE", "db.database"))
 
                 .build();
 
@@ -159,7 +159,7 @@ public class DeploymentConfigKubernetesModelProcessor {
     	EnvVarSource envVarSrc = new EnvVarSource();
     	
     	ConfigMapKeySelector cmks = new ConfigMapKeySelector();
-    	cmks.setName("ticket-db-config");
+    	cmks.setName(ConfigConstants.DB_CONFIGMAP_NAME);
     	cmks.setKey(keyName);
     	envVarSrc.setConfigMapKeyRef(cmks);
     	
@@ -170,7 +170,7 @@ public class DeploymentConfigKubernetesModelProcessor {
     	EnvVarSource envVarSrc = new EnvVarSource();
     	
     	SecretKeySelector secretKeyRef = new SecretKeySelector();
-    	secretKeyRef.setName("ticket-db-credentials");
+    	secretKeyRef.setName(ConfigConstants.DB_SECRET_NAME);
     	secretKeyRef.setKey(keyName);
     	envVarSrc.setSecretKeyRef(secretKeyRef);
     	
