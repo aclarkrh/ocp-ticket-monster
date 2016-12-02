@@ -591,7 +591,10 @@
 				<fabric8.parameter.CPU_LIMIT.description>The CPU resource limit for a container</fabric8.parameter.CPU_LIMIT.description>
 				<fabric8.parameter.CPU_LIMIT.value>800m</fabric8.parameter.CPU_LIMIT.value>
 
-				<fabric8.parameter.DB_CONFIGMAP_NAME.description>The name of the configmap containing database connection parameters</fabric8.parameter.DB_CONFIGMAP_NAME.description>
+				<fabric8.parameter.MEM_LIMIT.description>The memory resource limit for a container</fabric8.parameter.MEM_LIMIT.description>
+ 				<fabric8.parameter.MEM_LIMIT.value>1024Mi</fabric8.parameter.MEM_LIMIT.value>
+ 				
+ 				<fabric8.parameter.DB_CONFIGMAP_NAME.description>The name of the configmap containing database connection parameters</fabric8.parameter.DB_CONFIGMAP_NAME.description>
 				<fabric8.parameter.DB_CONFIGMAP_NAME.value>ticket-db-config</fabric8.parameter.DB_CONFIGMAP_NAME.value>
 
 				<fabric8.parameter.DB_SECRET_NAME.description>The name of the secret containing database connection credentials</fabric8.parameter.DB_SECRET_NAME.description>
