@@ -61,7 +61,6 @@ node() {
   }
 
   stage ('BLD Deploy') {
-    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace}"
     sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${bldNamespace} -f -"
   }
   
