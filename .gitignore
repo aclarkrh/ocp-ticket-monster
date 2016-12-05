@@ -1,5 +1,5 @@
-org/
-.settings/
+.DS_Store
+.settings
 .project
 .classpath
 target/
