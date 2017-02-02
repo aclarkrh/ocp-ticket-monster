@@ -60,13 +60,13 @@ node() {
     sh "${ocCmd} start-build ${artifact}-${version} -n ${bldNamespace} --wait=true"
   }
 
-  stage ('BLD Deploy') {
-    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${bldNamespace} -f -"
-  }
+  //stage ('BLD Deploy') {
+  //  sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${bldNamespace} -f -"
+  //}
   
-//  stage ('DEV Deploy') {
-//    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${devNamespace} -f -"
-//  }
+  stage ('DEV Deploy') {
+    sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${devNamespace} -f -"
+  }
 
 //  stage ('TST Deploy') {
 //    input "Deploy to TST?"
