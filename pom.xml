@@ -574,7 +574,7 @@
 				<fabric8.parameter.XPAAS_IS_TAG.value>latest</fabric8.parameter.XPAAS_IS_TAG.value>
 
 				<fabric8.parameter.APP_IS_PULL_NAMESPACE.description>Project where the application ImageStreams and BuildConfigs are installed.</fabric8.parameter.APP_IS_PULL_NAMESPACE.description>
-				<fabric8.parameter.APP_IS_PULL_NAMESPACE.value>ticket-monster</fabric8.parameter.APP_IS_PULL_NAMESPACE.value>
+				<fabric8.parameter.APP_IS_PULL_NAMESPACE.value>ticket-monster-bld</fabric8.parameter.APP_IS_PULL_NAMESPACE.value>
 
 				<fabric8.parameter.READINESS_PROBE_PATH.description>The path to probe for the HTTP readiness check</fabric8.parameter.READINESS_PROBE_PATH.description>
 				<fabric8.parameter.READINESS_PROBE_PATH.value>/#events</fabric8.parameter.READINESS_PROBE_PATH.value>
