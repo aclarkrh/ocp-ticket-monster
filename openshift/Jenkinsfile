@@ -65,6 +65,13 @@ node() {
   //}
   
   stage ('DEV Deploy') {
+
+    def configMapName = "ticket-db-config"
+    def secretName = "ticket-db-credentials"
+    def version = getVersion()
+    sh "tower-cli job launch --job-template=10 --extra-vars='{\"configMapVersion\":\"${version}\", \"namespace\":\"${devNamespace}\", \"configMapName\":\"${configMapName}\"}' --verbose --monitor"
+    sh "tower-cli job launch --job-template=14 --extra-vars='{\"secretVersion\":\"${version}\", \"namespace\":\"${devNamespace}\", \"secretName\":\"${secretName}\"}' --verbose --monitor"
+
     sh "${ocCmd} process -f target/classes/kubernetes-run.json -n ${devNamespace} | ${ocCmd} apply -n ${devNamespace} -f -"
   }
 
